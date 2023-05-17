@@ -124,6 +124,18 @@ const mutation = new GraphQLObjectType( {
 
             }
         },
+        deleteClient: {
+            type: ClientType,
+            args: {
+                id: { type: GraphQLNonNull( GraphQLID ) }
+            },
+            resolve: async ( parent, { id } ) =>
+            {
+                return await Client.findByIdAndRemove( id );
+
+            }
+        },
+
         addProject: {
 
             type: projectType,
@@ -173,6 +185,58 @@ const mutation = new GraphQLObjectType( {
                     description: args.description
                 } );
                 return project.save();
+            }
+        },
+        deleteProject: {
+            type: projectType,
+
+            args: {
+                id: { type: GraphQLNonNull( GraphQLID ) },
+
+            },
+            resolve: ( parent, args ) =>
+            {
+                return Project.findByIdAndRemove( args.id )
+
+            }
+        },
+        updateProject: {
+            type: projectType,
+            args: {
+                id: { type: GraphQLNonNull( GraphQLID ) },
+                name: { type: GraphQLString },
+                description: { type: GraphQLString },
+                status: {
+                    type: new GraphQLEnumType( {
+                        name: 'ProjectStatusnew',
+                        values: {
+                            'start': {
+                                value: 'Not Started'
+                            },
+                            'progress': {
+                                value: 'In Progress'
+                            },
+                            'completed': {
+                                value: 'Completed'
+                            }
+
+                        }
+                    } ),
+                }
+            },
+            resolve: ( parent, args ) =>
+            {
+                return Project.findByIdAndUpdate(
+                    args.id, {
+                    $set: {
+                        name: args.name,
+                        description: args.description,
+                        status: args.status
+                    },
+                },
+                    { 'start': true }
+                )
+
             }
         }
 
