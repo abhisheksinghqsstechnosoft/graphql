@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import AddUser from './pages/AddUser'
 
 
 const client = new ApolloClient( {
@@ -11,10 +12,13 @@ const client = new ApolloClient( {
 
 const App = () =>
 {
+
   return (
     <ApolloProvider client={ client }>
       <Routes>
         <Route path='/' element={ <Home /> } />
+        <Route path='/add-user' element={ <AddUser /> } />
+
       </Routes>
     </ApolloProvider>
   )

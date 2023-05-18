@@ -4,19 +4,22 @@ import React from 'react'
 import Header from './Header'
 import Client from '../components/Client'
 
+import { useNavigate } from 'react-router-dom'
+
 
 const Home = () =>
 {
-    // const adduser = () =>
-    // {
-    //     console.log( 'asdddsafuygsudsavxghyuywhdwdhfghsxvghcwyfcytfwsdywhasvxhvghavghxvghs' );
+    const Navigate = useNavigate();
+    const addUser = () =>
+    {
+        Navigate( '/add-user' )
 
-    // }
+    }
     return (
 
         <div>
             <Header />
-            <button >Add User</button>
+            <button onClick={ addUser }>Add User</button>
             <Client />
         </div>
     )
